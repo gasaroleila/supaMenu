@@ -8,6 +8,8 @@ import Loginscreen from "./screens/LoginScreen";
 import ScanScreen from "./screens/ScanScreen";
 import ListRestaurantsScreen from "./screens/ListRestaurantsScreen";
 import MenuOrderedScreen from "./screens/MenuOrderedScreen";
+import CategoryScreen from "./screens/CategoryScreen";
+import CheckoutScreen from "./screens/CheckoutScreen";
 
 const navigator = createStackNavigator({
   Home: {
@@ -42,6 +44,18 @@ const navigator = createStackNavigator({
   },
   MenuOrdered: {
     screen: MenuOrderedScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  Category: {
+    screen: CategoryScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  Checkout: {
+    screen: CheckoutScreen,
     navigationOptions: {
       headerShown: false
     }
