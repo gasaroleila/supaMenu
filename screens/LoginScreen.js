@@ -43,11 +43,12 @@ const Loginscreen = ({navigation}) => {
             {/* <CustomButton title="Sign In" onPress={handleSubmit}/> */}
             <CustomButton title="Sign In" onPress={() => navigation.navigate('Scan')}/>
             <Text style={styles.or}>OR</Text>
-            <CustomButton title="Login with Google" onPress={handleSubmit}/>
-            <CustomButton title="Login with facebook" onPress={handleSubmit}/>
+            <CustomButton title="Login with Google" onPress={handleSubmit} buttonStyle={styles.googleButton} textStyle={styles.textStyle}/>
+            <CustomButton title="Login with facebook" onPress={handleSubmit} buttonStyle={styles.googleButton} textStyle={styles.textStyle}/>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
             <Text style={styles.register}>
                 Don't have account? <Text style={styles.spanText} onPress = {() => navigation.navigate('Signup')}>Register</Text>
+                {/* Don'have account? <LinkText text='Register' onPress={() => navigation.navigate('Signup')}/> */}
             </Text>
         </View>
     </View>
@@ -120,6 +121,14 @@ const styles = StyleSheet.create({
         marginLeft: 120,
         marginTop: 10,
         marginBottom: 10,
+    },
+    googleButton:{
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#F7941D',
+    },
+    textStyle: {
+        color: '#F7941D'
     }
 });
 
