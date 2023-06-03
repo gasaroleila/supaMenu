@@ -4,6 +4,9 @@ import {View, TouchableOpacity, Text, FlatList, StyleSheet} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import CustomButton from '../components/CustomButton'
+import { NavigationContainer } from "@react-navigation/native";
+import AppBottomNavigation from "../components/bottomTabs";
+
 
 const CategoryScreen = ({navigation, category}) => {
     // const {category} = route.params;
@@ -57,7 +60,11 @@ const CategoryScreen = ({navigation, category}) => {
         navigation.goBack();
     }
 
-    return <View style={{flex: 1}}>
+    return (
+        // <NavigationContainer
+        // >
+        //     <AppBottomNavigation>
+        <View style={{ flex: 1 }}>
             {/* Top block */}
             <View style={styles.topNav}>
                 <TouchableOpacity onPress={handleGoBack}>
@@ -87,26 +94,11 @@ const CategoryScreen = ({navigation, category}) => {
        </View>
        <CustomButton title='Proceed to Checkout' onPress={() => navigation.navigate('Checkout')} />
        </View>
-
-       {/* Navigation bar */}
-       <View style={styles.bottomNav}>
-                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                    <Ionicons name="home" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="notifications" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="cart" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="settings" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="alarm" size={24} />
-                </TouchableOpacity>
-            </View>
-    </View>
+    
+                </View>
+            //     </AppBottomNavigation>
+            // </NavigationContainer>
+    )
 }
 
 const styles = StyleSheet.create({

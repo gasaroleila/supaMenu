@@ -3,6 +3,8 @@ import { TouchableOpacity } from "react-native";
 import { StyleSheet, View, Text, FlatList} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import RestaurantItem from "../components/Restaurant";
+import { NavigationContainer } from "@react-navigation/native";
+import AppBottomNavigation from "../components/bottomTabs";
 
 
 const ListRestaurantsScreen = ({ navigation }) => {
@@ -63,6 +65,10 @@ const ListRestaurantsScreen = ({ navigation }) => {
     }
 
     return (
+        // <NavigationContainer
+        //   independent={true}
+        // >
+        //     <AppBottomNavigation>
         <View style={{flex: 1}}>
             <View style={styles.topNav}>
                 {/**Top block */}
@@ -89,25 +95,9 @@ const ListRestaurantsScreen = ({ navigation }) => {
                 </View>
             {/* </ScrollView> */}
 
-            {/* Navigation bar */}
-            <View style={styles.bottomNav}>
-                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                    <Ionicons name="home" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="notifications" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="cart" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="settings" size={24} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Ionicons name="alarm" size={24} />
-                </TouchableOpacity>
-            </View>
-        </View>
+                </View>
+        // </AppBottomNavigation>
+        // </NavigationContainer>
     )
 }
 

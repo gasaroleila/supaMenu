@@ -9,7 +9,9 @@ import ScanScreen from "./screens/ScanScreen";
 import ListRestaurantsScreen from "./screens/ListRestaurantsScreen";
 import MenuOrderedScreen from "./screens/MenuOrderedScreen";
 import CategoryScreen from "./screens/CategoryScreen";
-import CheckoutScreen from "./screens/CheckoutScreen";
+import Checkout from "./screens/Checkout";
+import Feedback from "./screens/feedback";
+import PaymentSuccess from "./screens/Success";
 
 const navigator = createStackNavigator({
   Home: {
@@ -55,11 +57,26 @@ const navigator = createStackNavigator({
     }
   },
   Checkout: {
-    screen: CheckoutScreen,
+    screen: Checkout,
     navigationOptions: {
       headerShown: false
     }
   },
+
+  Feedback: {
+    screen: Feedback,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+
+  PaymentSuccess: {
+    screen: PaymentSuccess,
+    navigationOptions: {
+      headerShown: false
+    }
+  }
+
 },
 {
   initialRouteName: "Home"
@@ -76,6 +93,6 @@ if (!__DEV__) {
   require('react-native').unstable_enableLogBox();
 }
 
-AppRegistry.registerComponent('Trial', () => App);
+AppRegistry.registerComponent('supaMenu', () => App);
 
 export default App
