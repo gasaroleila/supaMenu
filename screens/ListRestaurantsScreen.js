@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { StyleSheet, View, Text, ScrollView, FlatList} from "react-native";
+import { StyleSheet, View, Text, FlatList} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import RestaurantItem from "../components/Restaurant";
 
@@ -68,7 +68,7 @@ const ListRestaurantsScreen = ({ navigation }) => {
                 {/**Top block */}
                 <View style={{marginLeft: 10}}>
                     <TouchableOpacity onPress={handleGoBack}>
-                        <Ionicons name="arrow-back" size={24} />
+                        <Ionicons name="chevron-back-outline" size={24} />
                     </TouchableOpacity>
                 </View>
                 <View style={{marginLeft: 10}}>
