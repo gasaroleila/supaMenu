@@ -1,64 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { StyleSheet, View, Text, FlatList} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import RestaurantItem from "../components/Restaurant";
 import { NavigationContainer } from "@react-navigation/native";
 import AppBottomNavigation from "../components/bottomTabs";
+import axiosInstance from "../config";
 
 
 const ListRestaurantsScreen = ({ navigation }) => {
+    
+    const searchedResto = navigation.getParam("searchedResto")
+    const [restaurantData, setRestaurantData] = useState([])
 
-    const restaurantData = [
-        {
-            id: 1,
-            title: 'Restaurant 1',
-            description: 'Welcome to Restaurant 1',
-            image: require('../assets/beach.jpg'),
-        },
-        {
-            id: 2,
-            title: 'Restaurant 2',
-            description: 'Welcome to Restaurant 2',
-            image: require('../assets/forest.jpg'),
-        },
-        {
-            id: 3,
-            title: 'Restaurant 3',
-            description: 'Welcome to Restaurant 3',
-            image: require('../assets/mountain.jpg'),
-        },
-        {
-            id: 1,
-            title: 'Restaurant 4',
-            description: 'Welcome to Restaurant 4',
-            image: require('../assets/beach.jpg'),
-        },
-        {
-            id: 2,
-            title: 'Restaurant 5',
-            description: 'Welcome to Restaurant 5',
-            image: require('../assets/forest.jpg'),
-        },
-        {
-            id: 3,
-            title: 'Restaurant 6',
-            description: 'Welcome to Restaurant 6',
-            image: require('../assets/mountain.jpg'),
-        },
-        {
-            id: 2,
-            title: 'Restaurant 7',
-            description: 'Welcome to Restaurant 7',
-            image: require('../assets/forest.jpg'),
-        },
-        {
-            id: 3,
-            title: 'Restaurant 8',
-            description: 'Welcome to Restaurant 8',
-            image: require('../assets/mountain.jpg'),
-        },
-    ];
+    useEffect(() => {
+        setRestaurantData(searchedResto)
+    }, [])
+    
 
     const handleGoBack = () => {
         navigation.goBack();
@@ -89,7 +47,7 @@ const ListRestaurantsScreen = ({ navigation }) => {
                    <FlatList 
                    showsVerticalScrollIndicator={false}
                    data={restaurantData}
-                   keyExtractor={(item) => item.id.toString()}
+                   keyExtractor={(item) => item.id}
                    renderItem={({item}) => <RestaurantItem restaurant={item} navigation={navigation}/> }
                    />
                 </View>

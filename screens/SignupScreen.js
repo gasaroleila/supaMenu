@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import { TextInput, View, StyleSheet, Text } from "react-native";
 import CustomButton from "../components/CustomButton";
-import LinkText from "../components/LinkText";
+import axiosInstance from "../config";
+import * as SecureStorage from "expo-secure-store"
 
 const SignupScreen = ({navigation}) => {
 
-    const[fullName, setFullName] = useState('');
-    const[email, setEmail] = useState('');
-    const[password, setPassword] = useState('');
-
-    const handleFullNameChange = (e) => {
-        setFullName(e.target.value);
-    }
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    }
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    }
+    const [data, setData] = useState({
+        fullName: "",
+        phoneNumber: "",
+        email: "",
+        password: ""
+    })
     
     const handleSubmit = () => {
-        console.log('Signup: ', fullName, email)
+        console.log("data",)
+        axiosInstance.post(`/user/register`, data)
+            .then(res => {
+                if (res.status === 201) {
+                   SecureStorage.setItemAsync("token", res.data.token)
+                   navigation.navigate("Login")
+               }
+            }).catch(err => {
+              console.log("error", err)
+          })
     }
     
     return <View style={styles.container}>
@@ -34,20 +37,30 @@ const SignupScreen = ({navigation}) => {
             <TextInput 
                 style={styles.input}
                 placeholder="Full Name"
-                value={fullName}
-                onChange={handleFullNameChange}
+                value={data.fullName}
+                onChangeText={e=> setData({...data, fullName: e })}
             />
-            <TextInput 
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChange={handlePasswordChange}
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              value={data.phoneNumber}
+              onChangeText={e=> setData({...data, phoneNumber:e})}
+            
             />
+           
             <TextInput 
                 style={styles.input}
                 placeholder="Your email"
-                value={email}
-                onChange={handleEmailChange}
+                value={data.email}
+                onChangeText={e=> setData({...data, email:e})}
+            />
+
+            <TextInput 
+                style={styles.input}
+                placeholder="Password"
+                value={data.password}
+                onChangeText={e=> setData({...data, password:e})}
             />
             <CustomButton title="Proceed" onPress={handleSubmit}/>
             <Text style={styles.or}>OR</Text>

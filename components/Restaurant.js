@@ -5,9 +5,9 @@ import {View, Image, Text} from 'react-native';
 const RestaurantItem = ({restaurant, navigation}) => {
     return(
     <View style={styles.restaurantContainer}>
-        <Image source={restaurant.image} style={styles.restaurantImage}/>
+            <Image source={{ uri: restaurant.coverImage }} style={styles.restaurantImage}/>
         <Text style={styles.textContainer}>
-            <Text style={styles.restaurantTitle} onPress = {() => navigation.navigate('MenuOrdered')}>{restaurant.title}</Text>{"\n"}
+            <Text style={styles.restaurantTitle} onPress = {() => navigation.navigate('MenuOrdered',{restaurantId: restaurant._id})}>{restaurant.name}</Text>{"\n"}
             <Text style={styles.restaurantDescription}>{restaurant.description}</Text>
         </Text>
     </View>

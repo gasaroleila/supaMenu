@@ -1,12 +1,19 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import SearchBar from "../components/SearchBar";
+import axiosInstance from "../config";
 
 const ScanScreen = ({navigation}) => {
 
     const handleSearch = (searchText) => {
-        console.log('perfoming search for: ', searchText);
-        navigation.navigate('ListRestaurants');
+        axiosInstance.get(`/resto/search/${searchText}`)
+            .then(res => {
+                if (res.status == 200) {
+                    navigation.navigate('ListRestaurants', {searchedResto: res.data})
+                }
+            }).catch(err => {
+              console.log("error", err)
+          })
     }
 
     return <View style={styles.container}>

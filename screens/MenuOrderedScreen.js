@@ -1,14 +1,21 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import LinkText from "../components/LinkText";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import Category from "../components/Category";
+import axiosInstance from "../config";
 
-const MenuOrderedScreen = ({navigation}) => {
-    const handleCategoryPress = (category) => {
-        navigation.navigate('Category', {category});
-    }
+const MenuOrderedScreen = ({ navigation }) => {
+    const restaurantId = navigation.getParam('restaurantId')
+    const [categories, setCategories] = useState([])
 
-    return <View style={{backgroundColor: 'black', flex: 1}}>
+    axiosInstance.get(`/resto/${restaurantId}`)
+        .then(res => {
+            setCategories(res.data.products)
+        }).catch(err => {
+          console.log("err", err)
+      })
+
+    return (
+        <View style={{ backgroundColor: 'black', flex: 1 }}>
         <Text style={{color: '#F7941D', textAlign:'center', marginTop: 50, fontSize: 18, fontWeight: 'bold'}}>Choose Kigali</Text>
         <View style={styles.topNav}>
             <TouchableOpacity style={{paddingRight: 30}}>
@@ -16,39 +23,26 @@ const MenuOrderedScreen = ({navigation}) => {
                 <Text style={{color: 'white'}}>N8</Text>
                 <Text style={{color: 'white', fontWeight: 'bold', fontSize: 15}}>Ordered</Text>
             </TouchableOpacity>
-            <View style={{width: 1, height: 70, backgroundColor: '#F7941D'}}/>
+
+
+            <View style={{width: 1, height: 70, backgroundColor: '#F7941D'}}>
             <TouchableOpacity style={{paddingLeft: 30}}>
                 <Image source={require('../assets/waiterIcon.png')}/>
                 <Text style={{color: 'white', fontSize: 15}}>Call waiter</Text>
             </TouchableOpacity>
-        </View>
+                </View>
+                
+                </View>
         <Text style={styles.menuHeader}>Menu</Text>
         {/* List of menu categories */}
-        <TouchableOpacity onPress={() => handleCategoryPress('Appetizer')} style={styles.menuItem}>
-            <Text style={styles.itemText}>Appetizer</Text>
-            <Ionicons name="chevron-forward-outline" size={20} style={{color: 'white', paddingRight: 30}}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleCategoryPress('Starter')} style={styles.menuItem}>
-            <Text style={styles.itemText}>Starter</Text>
-            <Ionicons name="chevron-forward-outline" size={20} style={{color: 'white', paddingRight: 30}}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleCategoryPress('Main')} style={styles.menuItem}>
-            <Text style={styles.itemText}>Main</Text>
-            <Ionicons name="chevron-forward-outline" size={20} style={{color: 'white', paddingRight: 30}}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleCategoryPress('Dessert')} style={styles.menuItem}>
-            <Text style={styles.itemText}>Dessert</Text>
-            <Ionicons name="chevron-forward-outline" size={20} style={{color: 'white', paddingRight: 30}}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleCategoryPress('Fruits')} style={styles.menuItem}>
-            <Text style={styles.itemText}>Fruits</Text>
-            <Ionicons name="chevron-forward-outline" size={20} style={{color: 'white', paddingRight: 30}}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleCategoryPress('Drinks')} style={styles.menuItem}>
-            <Text style={styles.itemText}>Drinks</Text>
-            <Ionicons name="chevron-forward-outline" size={20} style={{color: 'white', paddingRight: 30}}/>
-        </TouchableOpacity>
-    </View>
+        <FlatList
+            ShowVerticalScrollIndicator={false}
+            data={categories}
+            keyExtractor={(item) => item._id}
+                renderItem={({ item }) => <Category category={item} navigation={navigation} />}
+            />
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -66,20 +60,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         paddingBottom: 20
     },
-    menuItem:{
-        // backgroundColor: 'red',
-        color: 'white',
-        fontSize: 20,
-        padding: 13,
-        display: 'flex',
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    itemText: {
-        paddingLeft: 50,
-        fontSize: 17,
-        color: 'white'
-    }
+  
 
 })
 

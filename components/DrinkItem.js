@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native";
 
-const DrinkItem = ({drink, onUpdateTotal}) => {
-    const[quantity, setQuantity] = useState(0)
+const DrinkItem = ({ drink, onUpdateTotal }) => {
+    const [quantity, setQuantity] = useState(0)
 
     const handleAddDrink = () => {
         const updatedQuantity = quantity + 1;
@@ -20,7 +20,7 @@ const DrinkItem = ({drink, onUpdateTotal}) => {
 
     return(
         <View style={styles.drinkContainer}>
-            <Image source={drink.image} style={styles.drinkImage}/>
+            <Image source={{ uri: drink.optionCoverImage }} style={styles.drinkImage}/>
             <Text style={styles.textContainer}>
                 <Text style={{fontSize: 13, fontWeight: 'bold', width: '90%'}}>{drink.name}</Text>{"\n"}
                 <Text style={{fontSize: 10}}>{drink.description}</Text>{"\n"}
@@ -32,7 +32,7 @@ const DrinkItem = ({drink, onUpdateTotal}) => {
                         <TouchableOpacity onPress={handleRemoveDrink}>
                             <Text >-</Text>
                         </TouchableOpacity>
-                        <Text style={{color: '#F7941D'}}>{quantity}</Text>
+                        <Text style={{color: '#F7941D'}}>{drink.quantity}</Text>
                         <TouchableOpacity onPress={handleAddDrink}>
                             <Text>+</Text>
                         </TouchableOpacity>

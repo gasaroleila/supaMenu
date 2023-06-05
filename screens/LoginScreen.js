@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TextInput, View, StyleSheet, Text } from "react-native";
 import CustomButton from "../components/CustomButton";
 import LinkText from "../components/LinkText";
+import axiosInstance from "../config";
+import * as SecureStorage from "expo-secure-store"
 
 const Loginscreen = ({navigation}) => {
 
@@ -9,14 +11,23 @@ const Loginscreen = ({navigation}) => {
     const[password, setPassword] = useState('');
 
     const handleEmailChange = (e) => {
-        setEmail(e.target.value);
+        setEmail(e);
     }
     const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
+        setPassword(e);
     }
 
     const handleSubmit = () => {
-        console.log('Login: ', email, password)
+        axiosInstance.post("/user/login", {email: email, password: password})
+            .then(res => {
+                console.log("res", res)
+                if (res.status == 200) {
+                  SecureStorage.setItemAsync("token", res.data.token)
+                  navigation.navigate("Scan")
+              }
+            }).catch(err => {
+              console.log("error", err)
+         })
     }
 
     return <View style={styles.container}>
@@ -31,17 +42,17 @@ const Loginscreen = ({navigation}) => {
                 style={styles.input}
                 placeholder="Your Email"
                 value={email}
-                onChange={handleEmailChange}
+                onChangeText={handleEmailChange}
             />
             <TextInput 
                 style={styles.input}
                 placeholder="Password"
                 value={password}
-                onChange={handlePasswordChange}
+                onChangeText={handlePasswordChange}
             />
 
             {/* <CustomButton title="Sign In" onPress={handleSubmit}/> */}
-            <CustomButton title="Sign In" onPress={() => navigation.navigate('Scan')}/>
+            <CustomButton title="Sign In" onPress={() => handleSubmit()}/>
             <Text style={styles.or}>OR</Text>
             <CustomButton title="Login with Google" onPress={handleSubmit} buttonStyle={styles.googleButton} textStyle={styles.textStyle}/>
             <CustomButton title="Login with facebook" onPress={handleSubmit} buttonStyle={styles.googleButton} textStyle={styles.textStyle}/>

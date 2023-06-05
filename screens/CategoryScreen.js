@@ -1,17 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import DrinkItem from "../components/DrinkItem";
 import {View, TouchableOpacity, Text, FlatList, StyleSheet} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
 import CustomButton from '../components/CustomButton'
-import { NavigationContainer } from "@react-navigation/native";
-import AppBottomNavigation from "../components/bottomTabs";
+import { useRoute } from '@react-navigation/native';
+import axiosInstance from "../config";
 
 
 const CategoryScreen = ({navigation, category}) => {
-    // const {category} = route.params;
+    const categoryId = navigation.getParam('categoryId')
     const [totalAmount, setTotalAmount] = useState(0);
     console.log(category);
+
+    const [items, setItems] = useState([])
 
     const handleUpdateTotal = (price, quantity) => {
         const updateTotal = totalAmount + (price*quantity);
@@ -56,13 +57,21 @@ const CategoryScreen = ({navigation, category}) => {
         },
     ];
 
+    axiosInstance.get(`/product/${categoryId}`)
+        .then(res => {
+            setItems(res.data.options)
+        }).catch(err => {
+          console.log("error", err)
+      })
+
+   
     const handleGoBack = () => {
         navigation.goBack();
     }
 
     return (
         // <NavigationContainer
-        // >
+        // Z>
         //     <AppBottomNavigation>
         <View style={{ flex: 1 }}>
             {/* Top block */}
@@ -79,8 +88,8 @@ const CategoryScreen = ({navigation, category}) => {
        <View style={styles.scrollview}>
             <FlatList
             ShowVerticalScrollIndicator={false}
-            data={drinks}
-            keyExtractor={(item) => item.id.toString()}
+            data={items}
+            keyExtractor={(item) => item._id}
             renderItem={({item}) => <DrinkItem drink={item} onUpdateTotal={handleUpdateTotal}/>}
             />
        </View>
